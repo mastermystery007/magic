@@ -1,16 +1,28 @@
-# Arcana: Esoteric Magic
+# Esoteric Magic
 
-A premium, offline-first Expo / React Native course application with 15 complete lessons on esoteric magic, secret writing, drawing revelations, billets, predictions, haunted-object presentations, and original routine construction.
+A premium Expo / React Native course application with 15 lessons on secret writing, drawing revelations, billets, book tests, predictions, psychokinesis, spirit effects, ESP, bizarre magic and original gimmick design.
 
-## Included
+## Included now
 
-- 15 structured lessons
-- Scripts, drills, failure points, and quizzes
-- Search, bookmarks, completion tracking, and daily practice
-- On-device text-to-speech narration
-- Privacy policy, paid-store listing draft, EAS build configuration, and CI validation
-- No ads, subscriptions, or locked lesson packs
+- Complete 15-lesson curriculum and lesson-detail screens
+- Search and persistent completion tracking
+- Practice assignments and media requirements per lesson
+- Safety and intellectual-property guidance
+- Paid-download design with no ads or locked lessons
 
-The complete validated source bundle is published in this repository as `arcana-esoteric-magic-source.zip`. Extract it, run `npm install`, then `npm start`.
+## Run
 
-The first store release still needs original app artwork, screenshots, demonstration videos, and optional professionally recorded narration. See `MEDIA_ASSET_MANIFEST.md` inside the source bundle.
+```bash
+npm install
+npx expo start
+```
+
+## Still required before store release
+
+- Original icon, splash screen, screenshots and promotional graphics
+- Demonstration and explanation videos
+- Printable swami-writing, billet, ESP and routine-building resources
+- Original gimmick diagrams and safe-material instructions
+- Privacy policy, store listing and signed production build
+
+Do not copy proprietary commercial gimmicks, scripts or handling. Build original routines from credited general principles.
