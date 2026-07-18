@@ -1,28 +1,47 @@
 # Esoteric Magic
 
-A premium Expo / React Native course application with 15 lessons on secret writing, drawing revelations, billets, book tests, predictions, psychokinesis, spirit effects, ESP, bizarre magic and original gimmick design.
+A premium, offline-first Expo / React Native course application covering effect construction, misdirection, forces, secret writing, drawing revelations, one-ahead, billets, book tests, predictions, psychokinesis, hidden messages, ESP symbolism, bizarre magic, original gimmick design and complete act construction.
 
-## Included now
+## Current implementation
 
-- Complete 15-lesson curriculum and lesson-detail screens
-- Search and persistent completion tracking
-- Practice assignments and media requirements per lesson
-- Safety and intellectual-property guidance
-- Paid-download design with no ads or locked lessons
+- 15 expanded lessons with detailed theory chapters
+- Learning objectives and estimated duration
+- Step-by-step practice procedures
+- Model presentation wording
+- Skill drills and capstone assignments
+- Troubleshooting, safety and creator boundaries
+- Interactive knowledge checks with explanations
+- Persistent completion tracking and bookmarks
+- Search across titles, summaries, levels and objectives
+- Dark responsive mobile interface
+- No ads, subscriptions or locked lesson packs
 
-## Run
+## Run locally
 
 ```bash
 npm install
-npx expo start
+npm start
 ```
 
-## Still required before store release
+## Validate
 
-- Original icon, splash screen, screenshots and promotional graphics
-- Demonstration and explanation videos
-- Printable swami-writing, billet, ESP and routine-building resources
-- Original gimmick diagrams and safe-material instructions
-- Privacy policy, store listing and signed production build
+```bash
+npm run typecheck
+```
 
-Do not copy proprietary commercial gimmicks, scripts or handling. Build original routines from credited general principles.
+A GitHub Actions TypeScript workflow is included at `.github/workflows/typecheck.yml`.
+
+## Important files
+
+- `App.tsx` — course reader, search, bookmarks, progress and quizzes
+- `src/course.ts` — complete structured lesson content
+- `PRODUCTION_MANIFEST.md` — exact remaining demonstrations, printables, artwork and store assets
+- `app.json` — Expo application identity
+
+## Release status
+
+The application and written curriculum are implemented. A public-store release still requires original app artwork, screenshots, demonstration media, a hosted privacy policy, signed production builds and physical-device testing. The exact backlog and acceptance criteria are in `PRODUCTION_MANIFEST.md`.
+
+## Safety and creator scope
+
+This product is for lawful theatrical entertainment. Use safe materials, obtain consent and do not reproduce proprietary commercial gimmicks, scripts or handling. Supernatural themes must remain theatrical and must not be used to claim medical, spiritual or financial authority.
