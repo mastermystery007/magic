@@ -1,25 +1,135 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {StatusBar} from 'expo-status-bar';
-import React,{useEffect,useMemo,useState} from 'react';
-import {SafeAreaView,ScrollView,StyleSheet,Text,TextInput,TouchableOpacity,View} from 'react-native';
-type L={id:number;title:string;summary:string;points:string[];assignment:string;media:string};
-const lessons:L[]=[
-[1,'Constructing an Impossible Effect','Learn effect, method, presentation, convincers, cancellation and the spectator’s remembered experience.',['Define exactly what the audience should believe happened.','Remove plausible explanations through timing and structure.','Turn a modest method into a clear emotional mystery.'],'Reverse-engineer one trick into effect, secret actions, convincers and final memory.','Introductory performance, annotated effect-construction worksheet.'],
-[2,'Attention, Timing & Misdirection','Control attention naturally through gaze, questions, rhythm and meaningful action.',['Place secret actions on conversational offbeats.','Give every movement an innocent reason.','Use video review to detect rushed or suspicious handling.'],'Film a false transfer and a paper switch under conversational cover.','Slow-motion demonstrations and attention-map diagrams.'],
-[3,'The Utility Toolkit','Combine forces, glimpses, switches, indexes and multiple outs.',['Distinguish physical and psychological forces.','Build outcomes that survive more than one choice.','Prepare recoveries before performance.'],'Create a three-out prediction using ordinary cards or envelopes.','Force, glimpse and switch demonstration library.'],
-[4,'Swami Gimmick & Secret Writing','Master nail/thumb writing for late predictions, numbers, symbols and partial completions.',['Select the right writing surface, hand position and reveal timing.','Progress from strokes to digits, symbols and short additions.','Pre-write most information so secret work stays minimal.'],'Complete tracing drills and perform the Final Digit routine.','Macro handling video, printable digit drills and prop guide.'],
-[5,'Psychic Sketch Artist','Create original drawing revelations using controlled choice, peeks, impressions and progressive sketching.',['Restrict the drawing universe without making choices feel narrow.','Reveal orientation, shape and feature before the exact image.','Build original methods from general principles rather than copying commercial products.'],'Perform a back-to-back drawing duplication and audit suspicious moments.','Demonstration, common-drawing library and gimmick prototype guide.'],
-[6,'One-Ahead Revelations','Use sequential logic to reveal three writings, memories or drawings.',['Acquire the next item while revealing the current one.','Vary pacing and the texture of each reveal.','End cleanly on the strongest revelation.'],'Build and rehearse a three-person one-ahead sequence.','Flow diagram and complete performance video.'],
-[7,'Billet Craft','Handle folds, peeks, switches, orientation and disposal with ordinary paper.',['Choose paper and folding instructions that appear natural.','Maintain continuity before and after secret handling.','Protect angles and return or destroy evidence appropriately.'],'Practise one fold, one peek and one switch until conversational.','Overhead handling videos and printable billet templates.'],
-[8,'Book Tests','Create impossible word revelations using ordinary-looking books and controlled information.',['Compare forced location, known text, glimpses and progressive reveal.','Keep participant instructions simple.','Reveal meaning and imagery before exact letters.'],'Build one book test using a common or borrowed book.','Book-test walkthrough and script planner.'],
-[9,'Predictions & Impossible Locations','Use sealed, nested and indexed predictions with physical and verbal outs.',['Establish apparent commitment before the choices.','Compress many outcomes into a practical index.','Reveal from an impossible but dramatically motivated location.'],'Design a destination prediction with three viable outcomes.','Envelope/index construction and full routine.'],
-[10,'Psychokinesis & Haunted Objects','Create safe movement using balance, thread, magnets, static and ideomotor framing.',['Control environment, sight lines and reset.','Distinguish physical method from paranormal presentation.','Avoid unsafe magnets, heat, sharp objects and uncontrolled movement.'],'Perform a turning key or moving lightweight object under controlled conditions.','Thread safety guide, haunted-object demonstrations.'],
-[11,'Spirit Writing & Hidden Messages','Reveal symbols through safe heat, condensation, powder, prepared surfaces and layered paper.',['Use skin-safe and fire-safe materials only.','Give the message a narrative reason to appear.','Avoid hazardous chemicals and uncontrolled flame.'],'Create one mirror-condensation or prepared-paper revelation.','Safe-material list and three reveal demonstrations.'],
-[12,'ESP Symbols & Coincidences','Build escalating matching effects with original symbols, stacks and predictions.',['Use symbol forces, one-way concepts and structured matching.','Let the participant become the apparent mind reader.','Increase improbability without increasing procedure.'],'Design an original five-symbol set and perform a three-phase match.','Printable original ESP deck and routine video.'],
-[13,'Bizarre Magic & Story','Transform objects into mysteries through legends, photographs, letters and callbacks.',['Use story details that strengthen rather than bury the effect.','Create atmosphere without claiming harmful supernatural authority.','Connect separate methods through narrative callbacks.'],'Write and perform a three-minute haunted-photograph story.','Story template, sound-design placeholder and model performance.'],
-[14,'Designing Original Gimmicks','Prototype indexes, switching envelopes, impression surfaces and portable holders.',['Optimise innocent appearance, reset, silence, durability and disposal.','Test angles and failure modes before performance.','Respect proprietary products and develop original implementations.'],'Prototype one utility device and document five test failures.','Build diagrams, materials list and testing checklist.'],
-[15,'Seven-Minute Esoteric Act','Combine a symbol, drawing, haunted movement and prediction into a polished finale.',['Create escalation and remove dead time.','Use callbacks so the ending resolves earlier moments.','Evaluate clarity, audience management and strength of ending.'],'Record the full act and score every secret action and audience-facing beat.','Complete model act and performance assessment rubric.']
-].map(x=>({id:x[0] as number,title:x[1] as string,summary:x[2] as string,points:x[3] as string[],assignment:x[4] as string,media:x[5] as string}));
-const KEY='magic-progress-v1';
-export default function App(){const[selected,setSelected]=useState<L|null>(null),[done,setDone]=useState<number[]>([]),[q,setQ]=useState('');useEffect(()=>{AsyncStorage.getItem(KEY).then(v=>v&&setDone(JSON.parse(v))).catch(()=>{})},[]);const toggle=async(id:number)=>{const n=done.includes(id)?done.filter(x=>x!==id):[...done,id];setDone(n);await AsyncStorage.setItem(KEY,JSON.stringify(n))};const filtered=useMemo(()=>lessons.filter(l=>(l.title+l.summary).toLowerCase().includes(q.toLowerCase())),[q]);if(selected)return <SafeAreaView style={s.safe}><StatusBar style="light"/><ScrollView contentContainerStyle={s.page}><TouchableOpacity onPress={()=>setSelected(null)}><Text style={s.back}>‹ Course</Text></TouchableOpacity><Text style={s.kicker}>LESSON {selected.id} · 25–40 MIN</Text><Text style={s.title}>{selected.title}</Text><Text style={s.lead}>{selected.summary}</Text><View style={s.card}><Text style={s.cardTitle}>Core training</Text>{selected.points.map((p,i)=><Text key={i} style={s.body}>• {p}</Text>)}</View><View style={s.card}><Text style={s.cardTitle}>Practice assignment</Text><Text style={s.body}>{selected.assignment}</Text></View><View style={s.card}><Text style={s.cardTitle}>Media to add</Text><Text style={s.muted}>{selected.media}</Text></View><View style={s.card}><Text style={s.cardTitle}>Creator rule</Text><Text style={s.body}>Credit sources, write original explanations and routines, and never clone a commercial gimmick or proprietary handling. Rehearse method, presentation, safety and recovery equally.</Text></View><TouchableOpacity style={[s.button,done.includes(selected.id)&&s.done]} onPress={()=>toggle(selected.id)}><Text style={s.buttonText}>{done.includes(selected.id)?'Completed ✓':'Mark lesson complete'}</Text></TouchableOpacity></ScrollView></SafeAreaView>;return <SafeAreaView style={s.safe}><StatusBar style="light"/><ScrollView contentContainerStyle={s.page}><Text style={s.brand}>ESOTERIC MAGIC</Text><Text style={s.hero}>Impossible Predictions, Thought Revelations & Haunted Objects</Text><Text style={s.lead}>A premium course in secret writing, drawing revelations, billets, book tests, psychokinesis, spirit effects, ESP and original esoteric routines.</Text><View style={s.progress}><Text style={s.progressText}>{done.length}/15 lessons complete</Text><View style={s.track}><View style={[s.fill,{width:`${done.length/15*100}%`}]} /></View></View><TextInput value={q} onChangeText={setQ} placeholder="Search lessons…" placeholderTextColor="#888" style={s.search}/>{filtered.map(l=><TouchableOpacity key={l.id} style={s.lesson} onPress={()=>setSelected(l)}><View style={s.num}><Text style={s.numText}>{l.id}</Text></View><View style={{flex:1}}><Text style={s.lessonTitle}>{l.title}</Text><Text style={s.lessonSummary} numberOfLines={2}>{l.summary}</Text><Text style={s.meta}>25–40 min · lesson + drill + assessment</Text></View><Text style={s.chev}>{done.includes(l.id)?'✓':'›'}</Text></TouchableOpacity>)}<Text style={s.disclaimer}>For lawful theatrical entertainment. Use safe materials, obtain consent, respect intellectual property and never claim medical, spiritual or financial authority.</Text></ScrollView></SafeAreaView>}
-const s=StyleSheet.create({safe:{flex:1,backgroundColor:'#110b08'},page:{padding:20,paddingBottom:60},brand:{color:'#efb56a',fontSize:13,fontWeight:'800',letterSpacing:2,marginTop:8},hero:{color:'#fff',fontSize:35,fontWeight:'900',lineHeight:40,marginTop:10},lead:{color:'#d0c6bf',fontSize:16,lineHeight:24,marginTop:10},progress:{backgroundColor:'#201612',padding:16,borderRadius:16,marginTop:22},progressText:{color:'#fff',fontWeight:'700'},track:{height:7,backgroundColor:'#3c2b23',borderRadius:9,marginTop:10,overflow:'hidden'},fill:{height:7,backgroundColor:'#efb56a'},search:{backgroundColor:'#201612',color:'#fff',borderRadius:14,padding:15,marginVertical:16},lesson:{flexDirection:'row',gap:13,alignItems:'center',backgroundColor:'#1c1310',padding:15,borderRadius:16,marginBottom:10,borderWidth:1,borderColor:'#38261e'},num:{width:38,height:38,borderRadius:19,backgroundColor:'#3a271c',alignItems:'center',justifyContent:'center'},numText:{color:'#ffd099',fontWeight:'900'},lessonTitle:{color:'#fff',fontWeight:'800',fontSize:16},lessonSummary:{color:'#b8aaa2',fontSize:13,lineHeight:18,marginTop:4},meta:{color:'#8d776b',fontSize:11,marginTop:7},chev:{color:'#efb56a',fontSize:24},back:{color:'#efb56a',fontSize:17,fontWeight:'700',marginBottom:20},kicker:{color:'#c7955a',fontSize:12,fontWeight:'800',letterSpacing:1.4},title:{color:'#fff',fontSize:31,fontWeight:'900',lineHeight:36,marginTop:8},card:{backgroundColor:'#1c1310',padding:17,borderRadius:16,marginTop:14,borderWidth:1,borderColor:'#38261e'},cardTitle:{color:'#fff',fontSize:17,fontWeight:'800',marginBottom:8},body:{color:'#d0c6bf',fontSize:15,lineHeight:23,marginBottom:7},muted:{color:'#9b8a80',lineHeight:21},button:{backgroundColor:'#a85f2c',padding:17,borderRadius:15,alignItems:'center',marginTop:18},done:{backgroundColor:'#345a46'},buttonText:{color:'#fff',fontWeight:'900',fontSize:16},disclaimer:{color:'#806e64',fontSize:12,lineHeight:18,marginTop:24}});
+import { StatusBar } from 'expo-status-bar';
+import React, { useEffect, useMemo, useState } from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Lesson, lessons } from './src/course';
+
+const PROGRESS_KEY = 'magic-progress-v2';
+const BOOKMARK_KEY = 'magic-bookmarks-v1';
+type Answers = Record<number, number>;
+
+export default function App() {
+  const [selected, setSelected] = useState<Lesson | null>(null);
+  const [done, setDone] = useState<number[]>([]);
+  const [bookmarks, setBookmarks] = useState<number[]>([]);
+  const [query, setQuery] = useState('');
+  const [answers, setAnswers] = useState<Answers>({});
+
+  useEffect(() => {
+    Promise.all([AsyncStorage.getItem(PROGRESS_KEY), AsyncStorage.getItem(BOOKMARK_KEY)])
+      .then(([savedDone, savedBookmarks]) => {
+        if (savedDone) setDone(JSON.parse(savedDone));
+        if (savedBookmarks) setBookmarks(JSON.parse(savedBookmarks));
+      })
+      .catch(() => undefined);
+  }, []);
+
+  const filtered = useMemo(() => {
+    const needle = query.trim().toLowerCase();
+    if (!needle) return lessons;
+    return lessons.filter((lesson) => [lesson.title, lesson.summary, lesson.level, ...lesson.objectives].join(' ').toLowerCase().includes(needle));
+  }, [query]);
+
+  const toggleComplete = async (id: number) => {
+    const next = done.includes(id) ? done.filter((value) => value !== id) : [...done, id];
+    setDone(next);
+    await AsyncStorage.setItem(PROGRESS_KEY, JSON.stringify(next));
+  };
+
+  const toggleBookmark = async (id: number) => {
+    const next = bookmarks.includes(id) ? bookmarks.filter((value) => value !== id) : [...bookmarks, id];
+    setBookmarks(next);
+    await AsyncStorage.setItem(BOOKMARK_KEY, JSON.stringify(next));
+  };
+
+  const openLesson = (lesson: Lesson) => {
+    setSelected(lesson);
+    setAnswers({});
+  };
+
+  if (selected) {
+    const score = selected.quiz.reduce((total, item, index) => total + (answers[index] === item.answer ? 1 : 0), 0);
+    return (
+      <SafeAreaView style={styles.safe}>
+        <StatusBar style="light" />
+        <ScrollView contentContainerStyle={styles.page}>
+          <View style={styles.topRow}>
+            <TouchableOpacity onPress={() => setSelected(null)}><Text style={styles.back}>‹ Course</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => toggleBookmark(selected.id)}><Text style={styles.bookmark}>{bookmarks.includes(selected.id) ? '★ Saved' : '☆ Save'}</Text></TouchableOpacity>
+          </View>
+          <Text style={styles.kicker}>LESSON {selected.id} · {selected.level.toUpperCase()} · {selected.duration}</Text>
+          <Text style={styles.title}>{selected.title}</Text>
+          <Text style={styles.lead}>{selected.summary}</Text>
+          <Card title="Learning objectives">{selected.objectives.map((item) => <Bullet key={item} text={item} />)}</Card>
+          {selected.sections.map((section) => <Card key={section.heading} title={section.heading}>{section.body.map((paragraph) => <Text key={paragraph} style={styles.body}>{paragraph}</Text>)}</Card>)}
+          <Card title="Step-by-step practice">{selected.procedure.map((item, index) => <Numbered key={item} number={index + 1} text={item} />)}</Card>
+          <Card title="Model presentation">{selected.script.map((item) => <Text key={item} style={styles.quote}>“{item}”</Text>)}</Card>
+          <Card title="Skill drills">{selected.drills.map((item) => <Bullet key={item} text={item} />)}</Card>
+          <Card title="Troubleshooting">{selected.troubleshooting.map((item) => <View key={item.problem} style={styles.problemBlock}><Text style={styles.problem}>{item.problem}</Text><Text style={styles.body}>{item.response}</Text></View>)}</Card>
+          <Card title="Safety and creator boundary">{selected.boundaries.map((item) => <Bullet key={item} text={item} />)}</Card>
+          <Card title="Performance assignment"><Text style={styles.body}>{selected.assignment}</Text></Card>
+          <Card title="Knowledge check">
+            {selected.quiz.map((item, questionIndex) => {
+              const chosen = answers[questionIndex];
+              return <View key={item.question} style={styles.quizBlock}>
+                <Text style={styles.question}>{questionIndex + 1}. {item.question}</Text>
+                {item.options.map((option, optionIndex) => {
+                  const reveal = chosen !== undefined;
+                  const correct = optionIndex === item.answer;
+                  return <TouchableOpacity key={option} style={[styles.option, chosen === optionIndex && styles.optionChosen, reveal && correct && styles.optionCorrect]} onPress={() => setAnswers((current) => ({ ...current, [questionIndex]: optionIndex }))}><Text style={styles.optionText}>{option}</Text></TouchableOpacity>;
+                })}
+                {chosen !== undefined && <Text style={chosen === item.answer ? styles.feedbackCorrect : styles.feedbackWrong}>{chosen === item.answer ? 'Correct. ' : 'Review: '}{item.explanation}</Text>}
+              </View>;
+            })}
+            <Text style={styles.score}>Score: {score}/{selected.quiz.length}</Text>
+          </Card>
+          <Card title="Media production list">{selected.media.map((item) => <Bullet key={item} text={item} muted />)}</Card>
+          <TouchableOpacity style={[styles.button, done.includes(selected.id) && styles.done]} onPress={() => toggleComplete(selected.id)}><Text style={styles.buttonText}>{done.includes(selected.id) ? 'Completed ✓' : 'Mark lesson complete'}</Text></TouchableOpacity>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+
+  return (
+    <SafeAreaView style={styles.safe}>
+      <StatusBar style="light" />
+      <ScrollView contentContainerStyle={styles.page}>
+        <Text style={styles.brand}>ESOTERIC MAGIC</Text>
+        <Text style={styles.hero}>Impossible Predictions, Thought Revelations and Haunted Objects</Text>
+        <Text style={styles.lead}>A detailed practical course in secret writing, drawing revelations, billets, book tests, psychokinesis, hidden messages, original gimmicks and complete act construction.</Text>
+        <View style={styles.progress}>
+          <Text style={styles.progressText}>{done.length}/{lessons.length} lessons complete · {bookmarks.length} saved</Text>
+          <View style={styles.track}><View style={[styles.fill, { width: `${(done.length / lessons.length) * 100}%` }]} /></View>
+        </View>
+        <TextInput value={query} onChangeText={setQuery} placeholder="Search titles, methods or objectives…" placeholderTextColor="#888" style={styles.search} />
+        {filtered.map((lesson) => <TouchableOpacity key={lesson.id} style={styles.lesson} onPress={() => openLesson(lesson)}>
+          <View style={styles.num}><Text style={styles.numText}>{lesson.id}</Text></View>
+          <View style={styles.lessonText}>
+            <View style={styles.lessonTitleRow}><Text style={styles.lessonTitle}>{lesson.title}</Text>{bookmarks.includes(lesson.id) && <Text style={styles.star}>★</Text>}</View>
+            <Text style={styles.lessonSummary} numberOfLines={2}>{lesson.summary}</Text>
+            <Text style={styles.meta}>{lesson.duration} · {lesson.level} · {lesson.quiz.length} question quiz</Text>
+          </View>
+          <Text style={styles.chev}>{done.includes(lesson.id) ? '✓' : '›'}</Text>
+        </TouchableOpacity>)}
+        <Text style={styles.disclaimer}>For lawful theatrical entertainment. Use safe materials, obtain consent, respect intellectual property and never claim medical, spiritual or financial authority.</Text>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+function Card({ title, children }: { title: string; children: React.ReactNode }) { return <View style={styles.card}><Text style={styles.cardTitle}>{title}</Text>{children}</View>; }
+function Bullet({ text, muted = false }: { text: string; muted?: boolean }) { return <Text style={muted ? styles.muted : styles.body}>• {text}</Text>; }
+function Numbered({ number, text }: { number: number; text: string }) { return <View style={styles.numbered}><Text style={styles.stepNumber}>{number}</Text><Text style={styles.stepText}>{text}</Text></View>; }
+
+const styles = StyleSheet.create({
+  safe: { flex: 1, backgroundColor: '#110b08' }, page: { padding: 20, paddingBottom: 60 }, topRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  brand: { color: '#efb56a', fontSize: 13, fontWeight: '800', letterSpacing: 2, marginTop: 8 }, hero: { color: '#fff', fontSize: 35, fontWeight: '900', lineHeight: 40, marginTop: 10 }, lead: { color: '#d0c6bf', fontSize: 16, lineHeight: 24, marginTop: 10 },
+  progress: { backgroundColor: '#201612', padding: 16, borderRadius: 16, marginTop: 22 }, progressText: { color: '#fff', fontWeight: '700' }, track: { height: 7, backgroundColor: '#3c2b23', borderRadius: 9, marginTop: 10, overflow: 'hidden' }, fill: { height: 7, backgroundColor: '#efb56a' },
+  search: { backgroundColor: '#201612', color: '#fff', borderRadius: 14, padding: 15, marginVertical: 16 }, lesson: { flexDirection: 'row', gap: 13, alignItems: 'center', backgroundColor: '#1c1310', padding: 15, borderRadius: 16, marginBottom: 10, borderWidth: 1, borderColor: '#38261e' }, lessonText: { flex: 1 }, lessonTitleRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  num: { width: 38, height: 38, borderRadius: 19, backgroundColor: '#3a271c', alignItems: 'center', justifyContent: 'center' }, numText: { color: '#ffd099', fontWeight: '900' }, lessonTitle: { color: '#fff', fontWeight: '800', fontSize: 16, flexShrink: 1 }, lessonSummary: { color: '#b8aaa2', fontSize: 13, lineHeight: 18, marginTop: 4 }, meta: { color: '#8d776b', fontSize: 11, marginTop: 7 }, star: { color: '#ffd099' }, chev: { color: '#efb56a', fontSize: 24 },
+  back: { color: '#efb56a', fontSize: 17, fontWeight: '700', marginBottom: 20 }, bookmark: { color: '#ffd099', fontWeight: '800', marginBottom: 20 }, kicker: { color: '#c7955a', fontSize: 12, fontWeight: '800', letterSpacing: 1.2 }, title: { color: '#fff', fontSize: 31, fontWeight: '900', lineHeight: 36, marginTop: 8 },
+  card: { backgroundColor: '#1c1310', padding: 17, borderRadius: 16, marginTop: 14, borderWidth: 1, borderColor: '#38261e' }, cardTitle: { color: '#fff', fontSize: 17, fontWeight: '800', marginBottom: 10 }, body: { color: '#d0c6bf', fontSize: 15, lineHeight: 23, marginBottom: 9 }, muted: { color: '#9b8a80', fontSize: 15, lineHeight: 22, marginBottom: 7 },
+  quote: { color: '#ffe0b9', fontSize: 15, fontStyle: 'italic', lineHeight: 23, marginBottom: 12, paddingLeft: 12, borderLeftWidth: 3, borderLeftColor: '#a85f2c' }, numbered: { flexDirection: 'row', gap: 12, marginBottom: 10 }, stepNumber: { color: '#110b08', backgroundColor: '#efb56a', width: 24, height: 24, borderRadius: 12, textAlign: 'center', lineHeight: 24, fontWeight: '900' }, stepText: { color: '#d0c6bf', fontSize: 15, lineHeight: 22, flex: 1 },
+  problemBlock: { marginBottom: 10 }, problem: { color: '#fff', fontSize: 15, fontWeight: '800', marginBottom: 3 }, quizBlock: { marginBottom: 18 }, question: { color: '#fff', fontWeight: '800', fontSize: 15, lineHeight: 21, marginBottom: 8 }, option: { borderWidth: 1, borderColor: '#4a3328', borderRadius: 12, padding: 12, marginBottom: 7 }, optionChosen: { borderColor: '#efb56a', backgroundColor: '#3a251b' }, optionCorrect: { borderColor: '#69b889' }, optionText: { color: '#ded4cd', lineHeight: 20 }, feedbackCorrect: { color: '#8cddb0', lineHeight: 20, marginTop: 5 }, feedbackWrong: { color: '#e0a5a5', lineHeight: 20, marginTop: 5 }, score: { color: '#fff', fontWeight: '800', marginTop: 3 },
+  button: { backgroundColor: '#a85f2c', padding: 17, borderRadius: 15, alignItems: 'center', marginTop: 18 }, done: { backgroundColor: '#345a46' }, buttonText: { color: '#fff', fontWeight: '900', fontSize: 16 }, disclaimer: { color: '#806e64', fontSize: 12, lineHeight: 18, marginTop: 24 }
+});
